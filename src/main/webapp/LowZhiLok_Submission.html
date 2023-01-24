@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Submission</title>
+
+<link rel="stylesheet" type="text/css" href="../Style/style.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<form method="get" id="hideForm">
+<label>Name: </label>
+<input type="text" id="name" name="name"><br><br>
+
+<label>DOB: </label>
+<input type="date" id="dob" name="dob"><br><br>
+
+<label>Address: </label>
+<input type="text" id="address" name="address"><br><br>
+
+<label>Postcode: </label>
+<input type="text" id="postcode" name="postcode"><br><br>
+
+<label>State: </label>
+<input type="text" id="state" name="state" disabled="disabled" value=""><br><br>
+
+<input type="button" id="mysubmit" value="Submit">
+</form>
+
+<p id="result"> </p><br>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$("#postcode").on("change", function(){
+		if($(this).val() == 35000){
+			$("#state").val("Perak");
+		}else if($(this).val() == 50000){
+			$("#state").val("Kuala Lumpur");
+		}else if($(this).val() == 80000){
+			$("#state").val("Johor Bahru");
+		}else{
+			$("#state").val("No state display");
+		}
+	});
+	
+	$("#mysubmit").click(function(event){
+		var name = $("#name").val();
+		var dob = $("#dob").val();
+		var address = $("#address").val();
+		var postcode = $("#postcode").val();
+		var state = $("#state").val();
+		
+		$.ajax({
+			type: "GET",
+			url: "Submission",
+			data: {name:name, dob:dob, address:address, postcode:postcode,state:state},
+			success: function(data) {
+				$("#hideForm").hide();
+				$("#result").html(data);
+			},
+			error: function(error){
+				alert(error);
+			}
+		});
+	});
+});
+
+</script>
+</body>
+</html>
